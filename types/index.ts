@@ -1,7 +1,23 @@
+export type Gender = "woman" | "man" | "non-binary";
+
+export type Pronouns = "she/her" | "he/him" | "they/them";
+
+export type Orientation =
+  | "Straight"
+  | "Lesbian"
+  | "Gay"
+  | "Bisexual"
+  | "Queer"
+  | "Pansexual"
+  | "Asexual";
+
 export interface Profile {
   id: string;
   name: string;
   age: number;
+  gender: Gender;
+  pronouns: Pronouns;
+  orientation: Orientation;
   photo: string;
   bio: string;
   collegeOrCity: string;
@@ -30,3 +46,7 @@ export interface AppState {
   matches: string[]; // array of profileIds that are mutual matches
 }
 
+export interface FeedFilter {
+  gender?: Gender | "all";
+  orientation?: string | "all";
+}
