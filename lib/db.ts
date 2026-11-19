@@ -1,32 +1,51 @@
 import fs from "fs/promises";
 import path from "path";
+import os from "os";
 import { AppState, Profile, SwipeAction, Gender } from "@/types";
 import { MOCK_PROFILES } from "@/data/mockProfiles";
 
-const DATA_DIR = path.join(process.cwd(), "data");
-const STATE_FILE = path.join(DATA_DIR, "state.json");
+// Detect if running on Vercel or read-only environment
+const isVercel = !!process.env.VERCEL;
+const DATA_DIR = isVercel ? os.tmpdir() : path.join(process.cwd(), "data");
+const STATE_FILE = path.join(DATA_DIR, isVercel ? "coy-state.json" : "state.json");
 
 const INITIAL_STATE: AppState = {
   swipes: {},
   matches: [],
 };
 
+// In-memory memory fallback in case of serverless filesystem freeze
+let memoryState: AppState = { ...INITIAL_STATE };
+
 // Helper to ensure data directory exists and read state
 export async function getAppState(): Promise<AppState> {
   try {
     await fs.mkdir(DATA_DIR, { recursive: true });
     const data = await fs.readFile(STATE_FILE, "utf-8");
-    return JSON.parse(data);
+    const parsed = JSON.parse(data);
+    memoryState = parsed;
+    return parsed;
   } catch {
-    await saveAppState(INITIAL_STATE);
-    return { ...INITIAL_STATE };
+    // If reading from file fails, use memoryState or initialize
+    try {
+      await saveAppState(memoryState);
+    } catch {
+      // Ignore write errors in strict environments
+    }
+    return { ...memoryState };
   }
 }
 
-// Helper to write state to file
+// Helper to write state to file (with memory fallback)
 export async function saveAppState(state: AppState): Promise<void> {
-  await fs.mkdir(DATA_DIR, { recursive: true });
-  await fs.writeFile(STATE_FILE, JSON.stringify(state, null, 2), "utf-8");
+  memoryState = state;
+  try {
+    await fs.mkdir(DATA_DIR, { recursive: true });
+    await fs.writeFile(STATE_FILE, JSON.stringify(state, null, 2), "utf-8");
+  } catch (err) {
+    // Fallback to in-memory state if serverless disk is read-only
+    console.warn("Filesystem write skipped, using in-memory state fallback:", err);
+  }
 }
 
 // Get feed profiles (excluding any profile the user has already swiped)
