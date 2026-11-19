@@ -2,6 +2,9 @@
 
 > A full-stack swipe-based discovery experience built for **Coy**, featuring privacy-first mutual matching, inclusive LGBTQ+ profiles, smooth card drag gestures, and state persistence.
 
+🔗 **Live Production URL:** [https://getcoy-one.vercel.app/](https://getcoy-one.vercel.app/)  
+📦 **GitHub Repository:** [https://github.com/sanskritig007/getcoy](https://github.com/sanskritig007/getcoy)
+
 ---
 
 ## 📌 Part A: App Teardown & Suggested Core Features
