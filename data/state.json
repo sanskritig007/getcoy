@@ -1,4 +1,14 @@
 {
-  "swipes": {},
-  "matches": []
+  "swipes": {
+    "p1": "pass",
+    "p2": "pass",
+    "p3": "like",
+    "p4": "like",
+    "p5": "like",
+    "p6": "like",
+    "p7": "like"
+  },
+  "matches": [
+    "p5"
+  ]
 }
