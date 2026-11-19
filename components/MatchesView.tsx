@@ -7,9 +7,10 @@ import { Profile } from "@/types";
 interface MatchesViewProps {
   matches: Profile[];
   onStartSwiping: () => void;
+  onOpenChat: (profile: Profile) => void;
 }
 
-export default function MatchesView({ matches, onStartSwiping }: MatchesViewProps) {
+export default function MatchesView({ matches, onStartSwiping, onOpenChat }: MatchesViewProps) {
   if (matches.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center p-8 text-center min-h-[50vh]">
@@ -81,8 +82,8 @@ export default function MatchesView({ matches, onStartSwiping }: MatchesViewProp
 
               {/* Action Button */}
               <button
-                onClick={() => alert(`Starting private icebreaker with ${profile.name}! 💬`)}
-                className="mt-3 w-full py-1.5 rounded-xl bg-pink-50 hover:bg-pink-100 text-pink-600 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
+                onClick={() => onOpenChat(profile)}
+                className="mt-3 w-full py-1.5 rounded-xl bg-pink-50 hover:bg-pink-100 text-pink-600 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors active:scale-95 shadow-xs"
               >
                 <MessageCircle className="w-3.5 h-3.5" />
                 <span>Say Hi</span>

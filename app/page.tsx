@@ -13,6 +13,7 @@ import MatchModal from "@/components/MatchModal";
 import MatchesView from "@/components/MatchesView";
 import EmptyState from "@/components/EmptyState";
 import HomePlaceholder from "@/components/HomePlaceholder";
+import ChatModal from "@/components/ChatModal";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<TabType>("discover");
@@ -28,6 +29,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [isResetting, setIsResetting] = useState(false);
   const [matchedProfile, setMatchedProfile] = useState<Profile | null>(null);
+  const [chatProfile, setChatProfile] = useState<Profile | null>(null);
 
   // Fetch feed profiles from /api/feed
   const fetchFeed = useCallback(async (filter = activeFilter) => {
@@ -192,6 +194,7 @@ export default function Home() {
           <MatchesView
             matches={matches}
             onStartSwiping={() => setActiveTab("discover")}
+            onOpenChat={(profile) => setChatProfile(profile)}
           />
         )}
 
@@ -203,6 +206,12 @@ export default function Home() {
             setMatchedProfile(null);
             setActiveTab("matches");
           }}
+        />
+
+        {/* Icebreaker Chat Modal */}
+        <ChatModal
+          profile={chatProfile}
+          onClose={() => setChatProfile(null)}
         />
 
         {/* Bottom Tab Bar */}

@@ -1,14 +1,28 @@
 {
   "swipes": {
-    "p1": "pass",
-    "p2": "pass",
+    "p1": "like",
+    "p2": "like",
     "p3": "like",
     "p4": "like",
     "p5": "like",
     "p6": "like",
-    "p7": "like"
+    "p7": "like",
+    "p8": "like",
+    "p9": "pass",
+    "p10": "pass",
+    "p11": "like",
+    "p12": "like",
+    "p13": "pass",
+    "p14": "pass",
+    "p15": "like",
+    "p16": "like",
+    "p17": "like",
+    "p21": "like",
+    "p23": "like"
   },
   "matches": [
-    "p5"
+    "p2",
+    "p5",
+    "p16"
   ]
 }
